@@ -3,10 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components'
-import {submit} from '../../actions/Users'
+import {createUser} from '../../actions/Users'
 import {connect} from 'react-redux'
-import {push} from 'connected-react-router'
-import {routes} from '../Router'
+
 
 
 const Container = styled.div `
@@ -32,17 +31,18 @@ const useStyles = makeStyles(theme => ({
 
 
 
-class LoginPage extends Component {
+class SignUpPage extends Component {
   constructor(props){
     super(props)
       this.state = {
         email: "",
         password: "",
+        userName: "",
       }
   }
 
   componentDidUpdate () {
-    
+    console.log(this.state)
   }
 
 handleInputs = (event) => {
@@ -58,14 +58,14 @@ handleInputs = (event) => {
     return (
       <Container>
         <FormStyled>
+            <TextField  label="Nome de usuário" name="userName" type="text" required variant="outlined" value={this.state.userName} onChange={this.handleInputs}/>
+            <br/>
             <TextField  label="email" name="email" type="email" required variant="outlined" value={this.state.email} onChange={this.handleInputs}/>
-            <br></br>
+            <br/>
             <TextField  label="password" type="password" name="password" required variant="outlined" value={this.state.password} onChange={this.handleInputs}/>
-            
-            <Button variant="contained" color="primary" onClick={() => this.props.submit (this.state.email, this.state.password)}> Logar </Button>
         </FormStyled>
 
-        <Button variant="contained" color="primary" onClick={this.props.goToSignUp}> Cadastrar </Button>
+        <Button variant="contained" color="primary" onClick={() => this.props.createUser (this.state.userName,this.state.email, this.state.password)}> Cadastrar </Button>
       </Container>
     );
   }
@@ -73,11 +73,10 @@ handleInputs = (event) => {
 
 function mapDispatchToProps (dispatch){
   return ({
-    submit: (email, password) => dispatch (submit (email, password)),
-    goToSignUp: () => dispatch (push(routes.signUp))
+    createUser: (userName, email, password) => dispatch (createUser (userName, email, password)),
   })
 }
 
 
 
-export default connect (null,mapDispatchToProps)(LoginPage);
+export default connect (null,mapDispatchToProps)(SignUpPage);
