@@ -8,8 +8,6 @@ import Typography from '@material-ui/core/Typography'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import AddCommentIcon from '@material-ui/icons/AddComment';
-import {push} from 'connected-react-router';
-import {routes} from '../Router'
 import {connect} from 'react-redux'
 import { vote, fetchDetailsPageContent } from "../../actions/Posts"
 
@@ -39,33 +37,31 @@ function SimpleCard(props) {
       <Card className={classes.card} color="primary">
         <CardContent>
           <Typography variant="h5" component="h2">
-            {props.username}
+            {props.post.username}
           </Typography>
 
           <Typography variant="body2" component="p">
-            {props.text}
+            {props.post.text}
           </Typography>
         </CardContent>
         <CardActions >
           <Button
-             color={props.userVoteDirection === 1 ? "primary" : "secondary" } 
-             onClick={(ev) => props.vote(props.postId, 1,props.userVoteDirection)} 
+             color={props.post.userVoteDirection === 1 ? "primary" : "secondary" } 
+             onClick={() => props.vote(props.post.id, 1, props.post.userVoteDirection)} 
              size="small"><ArrowUpwardIcon/>
           </Button>
 
-          {props.votesCount}
+          {props.post.votesCount}
           
           <Button
-            color={props.userVoteDirection === -1 ? "primary" : "secondary" } 
-            onClick={(ev) => props.vote(props.postId, -1, props.userVoteDirection)} 
+            color={props.post.userVoteDirection === -1 ? "primary" : "secondary" } 
+            onClick={() => props.vote(props.post.id, -1, props.post.userVoteDirection)} 
             size="small"> <ArrowDownwardIcon/>
           </Button>
 
-          {props.comments}
-
           <Button 
             color="secondary" size="small" 
-            onClick={() => props.fetchDetailsPageContent (props.postId)}>
+            onClick={() => props.fetchDetailsPageContent (props.post.id)}>
             <AddCommentIcon/>
           </Button>
           
