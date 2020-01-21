@@ -11,6 +11,7 @@ import CommentIcon from '@material-ui/icons/Comment';
 import {push} from 'connected-react-router';
 import {routes} from '../Router'
 import {connect} from 'react-redux'
+import { vote } from "../../actions/Posts"
 
 const useStyles = makeStyles({
     card: {
@@ -44,10 +45,10 @@ function SimpleCard(props) {
             {props.text}
           </Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small"><ThumbUpAltIcon/></Button>
+        <CardActions >
+          <Button onClick={(ev) => props.vote(props.postId, 1)} size="small"><ThumbUpAltIcon/></Button>
           {props.votesCount}
-          <Button size="small"><ThumbDownIcon/></Button>
+          <Button onClick={(ev) => props.vote(props.postId, -1)} size="small"><ThumbDownIcon/></Button>
           {props.comments}
           <Button size="small" onClick={props.goToPostDetailsPage}><CommentIcon/></Button>
           
@@ -58,7 +59,8 @@ function SimpleCard(props) {
 
   function mapDispatchToProps (dispatch) {
       return ({
-        goToPostDetailsPage: () => (dispatch(push(routes.details)))
+        goToPostDetailsPage: () => (dispatch(push(routes.details))),
+        vote: (postId, direction) => (dispatch(vote(postId, direction)))
       })
   }
 

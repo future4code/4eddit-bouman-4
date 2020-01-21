@@ -49,11 +49,17 @@ componentDidMount () {
                 </FormStyled>
 
                 {this.props.posts.map(post => (
-                    <PostCard text={post.text} username={post.username} key={post.id} votesCount={post.votesCount} comments={post.commentsNumber}/>
+                    <PostCard 
+                        text={post.text} 
+                        username={post.username} 
+                        key={post.id} 
+                        votesCount={post.votesCount} 
+                        comments={post.commentsNumber}
+                        postId={post.id}
+                    />
                 )
                     
-                    )}
-                {console.log(this.props.posts)}
+                    )}                
             </div>
         )
     }

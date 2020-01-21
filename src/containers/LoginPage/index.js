@@ -7,7 +7,7 @@ import {submit} from '../../actions/Users'
 import {connect} from 'react-redux'
 import {push} from 'connected-react-router'
 import {routes} from '../Router'
-
+import logo from "../../images/logo.png"
 
 const Container = styled.div `
   display: flex;
@@ -57,6 +57,8 @@ handleInputs = (event) => {
   render() {
     return (
       <Container>
+        <img src={logo} width="300" />
+        
         <FormStyled>
             <TextField  label="email" name="email" type="email" required variant="outlined" value={this.state.email} onChange={this.handleInputs}/>
             <br></br>
