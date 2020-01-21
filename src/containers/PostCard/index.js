@@ -5,13 +5,12 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography'
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
-import CommentIcon from '@material-ui/icons/Comment';
-import {push} from 'connected-react-router';
-import {routes} from '../Router'
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import AddCommentIcon from '@material-ui/icons/AddComment';
 import {connect} from 'react-redux'
-import { vote } from "../../actions/Posts"
+import { vote, fetchDetailsPageContent } from "../../actions/Posts"
+
 
 const useStyles = makeStyles({
     card: {
@@ -38,19 +37,33 @@ function SimpleCard(props) {
       <Card className={classes.card} color="primary">
         <CardContent>
           <Typography variant="h5" component="h2">
-            {props.username}
+            {props.post.username}
           </Typography>
 
           <Typography variant="body2" component="p">
-            {props.text}
+            {props.post.text}
           </Typography>
         </CardContent>
         <CardActions >
-          <Button onClick={(ev) => props.vote(props.postId, 1)} size="small"><ThumbUpAltIcon/></Button>
-          {props.votesCount}
-          <Button onClick={(ev) => props.vote(props.postId, -1)} size="small"><ThumbDownIcon/></Button>
-          {props.comments}
-          <Button size="small" onClick={props.goToPostDetailsPage}><CommentIcon/></Button>
+          <Button
+             color={props.post.userVoteDirection === 1 ? "primary" : "secondary" } 
+             onClick={() => props.vote(props.post.id, 1, props.post.userVoteDirection)} 
+             size="small"><ArrowUpwardIcon/>
+          </Button>
+
+          {props.post.votesCount}
+          
+          <Button
+            color={props.post.userVoteDirection === -1 ? "primary" : "secondary" } 
+            onClick={() => props.vote(props.post.id, -1, props.post.userVoteDirection)} 
+            size="small"> <ArrowDownwardIcon/>
+          </Button>
+
+          <Button 
+            color="secondary" size="small" 
+            onClick={() => props.fetchDetailsPageContent (props.post.id)}>
+            <AddCommentIcon/>
+          </Button>
           
         </CardActions>
       </Card>
@@ -59,8 +72,8 @@ function SimpleCard(props) {
 
   function mapDispatchToProps (dispatch) {
       return ({
-        goToPostDetailsPage: () => (dispatch(push(routes.details))),
-        vote: (postId, direction) => (dispatch(vote(postId, direction)))
+        fetchDetailsPageContent: (postId) => dispatch (fetchDetailsPageContent(postId)),
+        vote: (postId, direction, userVoteDirection) => (dispatch(vote(postId, direction, userVoteDirection)))
       })
   }
 
