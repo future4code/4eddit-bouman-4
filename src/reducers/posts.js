@@ -1,5 +1,6 @@
 const initalState = ({
     posts : [],
+    currentPostId: "",
 })
 
 export function postReducer (state = initalState, action) {
@@ -7,7 +8,13 @@ export function postReducer (state = initalState, action) {
         case "SET_POSTS": 
             return ({
                 ...state, posts: action.payload.posts
-            }) 
+            })
+        
+        case "SET_DETAILS":
+            return ({
+                ...state, currentPostId: action.payload.post
+            })
+            
         default:
             return (
                 state

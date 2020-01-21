@@ -12,11 +12,26 @@ class DetailsPage extends React.Component {
 
     render () {
         return(
-         <input></input>   
+            <div>
+
+                {this.props.post.comments.map(
+                    comment => comment.text
+                )}
+
+            </div>
+            
         )
     }
 
 }
 
-export default connect () (DetailsPage)
+function mapStateToProps (state)  {
+    return ({
+        post: state.postReducer.currentPostId
+
+    })
+}
+
+
+export default connect (mapStateToProps) (DetailsPage)
 

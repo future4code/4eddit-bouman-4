@@ -47,7 +47,7 @@ componentDidMount () {
                     <Button variant="contained" color="primary" onClick={() => this.props.createNewPost(this.state.postText)}> Enviar </Button>
 
                 </FormStyled>
-
+            {console.log(this.props.posts)}
                 {this.props.posts.map(post => (
                     <PostCard 
                         text={post.text} 
@@ -56,6 +56,7 @@ componentDidMount () {
                         votesCount={post.votesCount} 
                         comments={post.commentsNumber}
                         postId={post.id}
+                        userVoteDirection={post.userVoteDirection}
                     />
                 )
                     
