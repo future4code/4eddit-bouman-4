@@ -110,11 +110,11 @@ export const vote = (postId, direction, userVoteDirection) => async (dispatch) =
     }
 }
 
-export const fetchDetailsPageContent = (postId) => async (dispatch) => {
+export const fetchDetailsPageContent = (post) => async (dispatch) => {
     const token = window.localStorage.getItem("token")
     try {
         const response = await Axios.get (
-            `https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts/${postId}/`,
+            `https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts/${post.id}/`,
             
             {
                 headers: {
@@ -126,20 +126,100 @@ export const fetchDetailsPageContent = (postId) => async (dispatch) => {
             
         
         )
-            console.log(response.data.post)
-        dispatch (setDetailsPageContent(response.data.post))
-        dispatch (push(routes.details))    
+        dispatch (setDetailsPageContent (response.data.post.comments, post))
+        dispatch (push (routes.details))    
     }
     
     catch (error) {
-        alert("Ocorreu um erro, tente novamente")
         console.log(error)
+        alert("ERRO QUANDO CLIQUEI NO COMENTARIO")
+        
     }
 }
 
-const setDetailsPageContent = (post) => ({
+const setDetailsPageContent = (comments, post) => ({
     type: "SET_DETAILS",
     payload: {
-        post
+        comments, post
     }
 })
+
+export const createComment =  (post, newComment)=> async (dispatch) => {
+    const token = window.localStorage.getItem("token")
+    try{
+        await Axios.post (
+            `https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts/${post.id}/comment`,
+            { 
+                "text": newComment
+            },
+
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth": token
+                } 
+            },
+
+
+            )
+
+        alert("Sucesso!")
+        dispatch(fetchDetailsPageContent(post))
+
+    }catch{
+        alert('Ocorreu um erro')
+    }
+}
+
+export const voteComment =  (commentId, direction, userVoteDirection, postId, currentPost) => async (dispatch) => {
+    const token = window.localStorage.getItem("token")
+    if (userVoteDirection === direction){
+        try {
+            await Axios.put (
+                `https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts/${postId}/comment/${commentId}/vote`,
+                
+                {
+                    "direction": 0,               
+                },
+        
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "auth": token
+                    } 
+                },
+        
+            )
+            dispatch(fetchDetailsPageContent(currentPost))    
+        }
+        catch (error) {
+            alert("Ocorreu um erro, tente novamente")
+            console.log(error)
+        }
+    }
+    else{
+        try {
+            await Axios.put (
+                `https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts/${postId}/comment/${commentId}/vote`,
+                
+                {
+                    "direction": direction,               
+                },
+        
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "auth": token
+                    } 
+                },
+        
+            )
+            
+        dispatch(fetchDetailsPageContent(currentPost)) 
+
+        } catch (error) {
+            alert("Ocorreu um erro, tente novamente")
+            console.log(error)
+        }
+    }
+}

@@ -1,6 +1,7 @@
 const initalState = ({
     posts : [],
-    currentPostId: "",
+    currentPostComments: [],
+    currentPost: "",
 })
 
 export function postReducer (state = initalState, action) {
@@ -12,7 +13,9 @@ export function postReducer (state = initalState, action) {
         
         case "SET_DETAILS":
             return ({
-                ...state, currentPostId: action.payload.post
+                ...state, currentPostComments: action.payload.comments,
+                          currentPost: action.payload.post
+
             })
             
         default:

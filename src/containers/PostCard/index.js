@@ -10,6 +10,15 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import AddCommentIcon from '@material-ui/icons/AddComment';
 import {connect} from 'react-redux'
 import { vote, fetchDetailsPageContent } from "../../actions/Posts"
+import styled from 'styled-components'
+
+
+const VoteCount = styled.span`
+  color: ${props => props.color}
+
+`
+
+
 
 
 const useStyles = makeStyles({
@@ -29,9 +38,18 @@ const useStyles = makeStyles({
     },
   });
   
-function SimpleCard(props) {
+export function SimpleCard(props) {
     const classes = useStyles();
 
+  const VoteCountColor = () => {
+  if (props.post.votesCount > 0) {
+    return ('green')
+  }else if(props.post.votesCount < 0){
+    return ('red')
+  }else{
+    return ('gainsboro')
+  }
+}
   
     return (
       <Card className={classes.card} color="primary">
@@ -51,7 +69,7 @@ function SimpleCard(props) {
              size="small"><ArrowUpwardIcon/>
           </Button>
 
-          {props.post.votesCount}
+          <VoteCount color={VoteCountColor ()}>{props.post.votesCount}</VoteCount>
           
           <Button
             color={props.post.userVoteDirection === -1 ? "primary" : "secondary" } 
@@ -59,9 +77,11 @@ function SimpleCard(props) {
             size="small"> <ArrowDownwardIcon/>
           </Button>
 
+          {props.post.commentsNumber}
+
           <Button 
             color="secondary" size="small" 
-            onClick={() => props.fetchDetailsPageContent (props.post.id)}>
+            onClick={() => props.fetchDetailsPageContent (props.post)}>
             <AddCommentIcon/>
           </Button>
           
@@ -72,7 +92,7 @@ function SimpleCard(props) {
 
   function mapDispatchToProps (dispatch) {
       return ({
-        fetchDetailsPageContent: (postId) => dispatch (fetchDetailsPageContent(postId)),
+        fetchDetailsPageContent: (post) => dispatch (fetchDetailsPageContent(post)),
         vote: (postId, direction, userVoteDirection) => (dispatch(vote(postId, direction, userVoteDirection)))
       })
   }
