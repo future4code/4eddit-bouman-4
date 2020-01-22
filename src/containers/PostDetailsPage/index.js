@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import TextField from '@material-ui/core/TextField';
-import {createComment} from '../../actions/Posts'
+import {createComment, vote, voteAndUpdate} from '../../actions/Posts'
 import styled from 'styled-components'
 import CommentCard from '../CommentCard'
 import {routes} from '../Router/'
@@ -48,7 +48,6 @@ class DetailsPage extends React.Component {
         }
     }
 
-    
 
     
 
@@ -102,7 +101,7 @@ class DetailsPage extends React.Component {
 
                     <Button
                         color={this.props.currentPost.userVoteDirection === 1 ? "primary" : "secondary" } 
-                        onClick={() => this.props.vote(this.props.currentPost.id, 1, this.props.currentPost.userVoteDirection)} 
+                        onClick={() => this.props.voteAndUpdate (this.props.currentPost, +1)} 
                         size="small"><ArrowUpwardIcon/>
                     </Button>
 
@@ -110,17 +109,13 @@ class DetailsPage extends React.Component {
                     
                     <Button
                         color={this.props.currentPost.userVoteDirection === -1 ? "primary" : "secondary" } 
-                        onClick={() => this.props.vote(this.props.currentPost.id, -1, this.props.currentPost.userVoteDirection)} 
+                        onClick={() => this.props.voteAndUpdate (this.props.currentPost, -1)} 
                         size="small"> <ArrowDownwardIcon/>
                     </Button>
 
                     {this.props.currentPost.commentsNumber}
 
-                    <Button 
-                        color="secondary" size="small" 
-                        onClick={() => this.props.fetchDetailsPageContent (this.props.currentPost)}>
-                        <AddCommentIcon/>
-                    </Button>
+                    {" Comentários"}
                 </Card>
                 
 
@@ -149,7 +144,9 @@ class DetailsPage extends React.Component {
 function mapDispatchToProps (dispatch) {
     return ({
         createComment: (currentPostId, newComment) => dispatch(createComment(currentPostId, newComment)),
-        goToFeed: () => dispatch(push(routes.feed))
+        goToFeed: () => dispatch(push(routes.feed)),
+        vote: (currentPostId, direction, userVoteDirection) => dispatch (vote(currentPostId, direction, userVoteDirection)),
+        voteAndUpdate: (post, direction) => dispatch (voteAndUpdate(post, direction))
     })
 }
 

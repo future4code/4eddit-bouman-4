@@ -12,6 +12,8 @@ import logo from "../../images/logo.png"
 const Container = styled.div `
   display: flex;
   flex-direction: column;
+  align-item:center;
+  width:300px;
   `
 
 const FormStyled = styled.form `

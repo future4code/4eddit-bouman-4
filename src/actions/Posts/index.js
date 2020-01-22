@@ -78,7 +78,9 @@ export const vote = (postId, direction, userVoteDirection) => async (dispatch) =
                 },
         
             )
+                
                 dispatch(fetchPosts())
+                
         }
         catch (error) {
             alert("Ocorreu um erro, tente novamente")
@@ -126,8 +128,11 @@ export const fetchDetailsPageContent = (post) => async (dispatch) => {
             
         
         )
+        
         dispatch (setDetailsPageContent (response.data.post.comments, post))
-        dispatch (push (routes.details))    
+        
+        dispatch (push (routes.details))
+           
     }
     
     catch (error) {
@@ -173,7 +178,6 @@ export const createComment =  (post, newComment)=> async (dispatch) => {
 
 export const voteComment =  (commentId, direction, userVoteDirection, postId, currentPost) => async (dispatch) => {
     const token = window.localStorage.getItem("token")
-    console.log(commentId, direction, userVoteDirection, postId, currentPost, token)
     if (userVoteDirection === direction){
         try {
             await Axios.put (
@@ -223,4 +227,9 @@ export const voteComment =  (commentId, direction, userVoteDirection, postId, cu
             console.log(error)
         }
     }
+}
+
+export const voteAndUpdate = (post, direction) => async (dispatch) => {
+    await vote(post.id, direction, post.userVoteDirection)
+    dispatch (fetchDetailsPageContent(post))
 }
