@@ -78,7 +78,9 @@ export const vote = (postId, direction, userVoteDirection) => async (dispatch) =
                 },
         
             )
+                
                 dispatch(fetchPosts())
+                
         }
         catch (error) {
             alert("Ocorreu um erro, tente novamente")
@@ -126,8 +128,11 @@ export const fetchDetailsPageContent = (post) => async (dispatch) => {
             
         
         )
+        
         dispatch (setDetailsPageContent (response.data.post.comments, post))
-        dispatch (push (routes.details))    
+        
+        dispatch (push (routes.details))
+           
     }
     
     catch (error) {
@@ -190,7 +195,7 @@ export const voteComment =  (commentId, direction, userVoteDirection, postId, cu
                 },
         
             )
-            dispatch(fetchDetailsPageContent(currentPost))    
+          dispatch(fetchDetailsPageContent(currentPost))    
         }
         catch (error) {
             alert("Ocorreu um erro, tente novamente")
@@ -222,4 +227,9 @@ export const voteComment =  (commentId, direction, userVoteDirection, postId, cu
             console.log(error)
         }
     }
+}
+
+export const voteAndUpdate = (post, direction) => async (dispatch) => {
+    await vote(post.id, direction, post.userVoteDirection)
+    dispatch (fetchDetailsPageContent(post))
 }

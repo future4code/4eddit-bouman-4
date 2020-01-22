@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PostCard from '../PostCard'
+import {routes} from '../Router'
+import {push} from 'connected-react-router'
 
 
 
@@ -35,8 +37,15 @@ handleInputs = (event) => {
     
 
 componentDidMount () {
-    this.props.fetchPosts () 
-}    
+    
+    const token = window.localStorage.getItem("token")
+    
+    if (token) {
+        this.props.fetchPosts()
+    }else{
+        this.props.goToLoginPage()
+    }
+}
 
     render () {
         return (
@@ -61,7 +70,8 @@ componentDidMount () {
 function mapDispatchToProps (dispatch){
     return ({
       fetchPosts: () => dispatch (fetchPosts()),
-      createNewPost: (postText) => dispatch (createNewPost(postText))
+      createNewPost: (postText) => dispatch (createNewPost(postText)),
+      goToLoginPage: () => dispatch (push(routes.root))
     })
 }
 

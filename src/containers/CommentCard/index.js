@@ -7,8 +7,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import {connect} from 'react-redux'
-import {voteComment} from '../../actions/Posts'
+import { connect } from 'react-redux'
+import { voteComment } from '../../actions/Posts'
 
 const useStyles = makeStyles({
   card: {
@@ -34,43 +34,57 @@ function SimpleCard(props) {
     <Card className={classes.card}>
       <CardContent>
         <Typography variant="h5" component="h2">
-            {props.comment.username}
+          {props.comment.username}
         </Typography>
 
         <Typography variant="body2" component="p">
-            {props.comment.text}
+          {props.comment.text}
         </Typography>
       </CardContent>
-      <CardActions>
-      <Button
-             color={props.comment.userVoteDirection === 1 ? "primary" : "secondary" } 
-             onClick={() => props.voteComment(props.comment.id, 1, props.comment.userVoteDirection, props.postId, props.currentPost)} 
-             size="small"><ArrowUpwardIcon/>
-          </Button>
 
-          {props.comment.votesCount}
-          
-          <Button
-            color={props.comment.userVoteDirection === -1 ? "primary" : "secondary" } 
-            onClick={() => props.voteComment(props.comment.id, -1, props.comment.userVoteDirection, props.postId,props.currentPost)} 
-            size="small"> <ArrowDownwardIcon/>
-          </Button>
+      <CardActions>
+        <Button
+          color={props.comment.userVoteDirection === 1 ? "primary" : "secondary"}
+          onClick={() => props.voteComment(
+            props.comment.id,
+            1,
+            props.comment.userVoteDirection,
+            props.currentPost.id,
+            props.currentPost)}
+          size="small"><ArrowUpwardIcon />
+        </Button>
+
+        {props.comment.votesCount}
+
+        <Button
+          color={props.comment.userVoteDirection === -1 ? "primary" : "secondary"}
+          onClick={() => props.voteComment(
+            props.comment.id,
+            -1,
+            props.comment.userVoteDirection,
+            props.currentPost.id, props.currentPost)}
+          size="small"> <ArrowDownwardIcon />
+        </Button>
 
       </CardActions>
     </Card>
   );
 }
 
-function mapDispatchToProps (dispatch) {
-    return({
-        voteComment:(commentId, direction, userVoteDirection, postId, currentPost) => dispatch (voteComment(commentId, direction, userVoteDirection, postId,currentPost))
-    })
+function mapDispatchToProps(dispatch) {
+  return ({
+    voteComment: (commentId, direction, userVoteDirection, postId, currentPost) => dispatch(voteComment(
+      commentId,
+      direction,
+      userVoteDirection,
+      postId, currentPost))
+  })
 }
 
-function mapStateToProps (state) {
-    return({
-        currentPost: state.postReducer.currentPost
-    })
+function mapStateToProps(state) {
+  return ({
+    currentPost: state.postReducer.currentPost
+  })
 }
 
-export default connect (mapStateToProps, mapDispatchToProps) (SimpleCard)
+export default connect(mapStateToProps, mapDispatchToProps)(SimpleCard)
