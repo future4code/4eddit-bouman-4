@@ -41,18 +41,19 @@ function SimpleCard(props) {
             {props.comment.text}
         </Typography>
       </CardContent>
+      
       <CardActions>
-      <Button
+          <Button
              color={props.comment.userVoteDirection === 1 ? "primary" : "secondary" } 
-             onClick={() => props.voteComment(props.comment.id, 1, props.comment.userVoteDirection, props.postId, props.currentPost)} 
+             onClick={() => props.voteComment(props.comment.id, 1, props.comment.userVoteDirection, props.currentPost.id, props.currentPost)} 
              size="small"><ArrowUpwardIcon/>
           </Button>
 
-          {props.comment.votesCount}
+            {props.comment.votesCount}
           
           <Button
             color={props.comment.userVoteDirection === -1 ? "primary" : "secondary" } 
-            onClick={() => props.voteComment(props.comment.id, -1, props.comment.userVoteDirection, props.postId,props.currentPost)} 
+            onClick={() => props.voteComment(props.comment.id, -1, props.comment.userVoteDirection, props.currentPost.id,props.currentPost)} 
             size="small"> <ArrowDownwardIcon/>
           </Button>
 

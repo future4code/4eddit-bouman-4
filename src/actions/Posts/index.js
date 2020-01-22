@@ -173,6 +173,7 @@ export const createComment =  (post, newComment)=> async (dispatch) => {
 
 export const voteComment =  (commentId, direction, userVoteDirection, postId, currentPost) => async (dispatch) => {
     const token = window.localStorage.getItem("token")
+    console.log(commentId, direction, userVoteDirection, postId, currentPost, token)
     if (userVoteDirection === direction){
         try {
             await Axios.put (
@@ -190,7 +191,7 @@ export const voteComment =  (commentId, direction, userVoteDirection, postId, cu
                 },
         
             )
-            dispatch(fetchDetailsPageContent(currentPost))    
+          dispatch(fetchDetailsPageContent(currentPost))    
         }
         catch (error) {
             alert("Ocorreu um erro, tente novamente")
