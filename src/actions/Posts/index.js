@@ -1,6 +1,6 @@
 import Axios from "axios"
 import {routes} from '../../containers/Router'
-import {push} from 'connected-react-router'
+import {push, replace} from 'connected-react-router'
 
 export const fetchPosts  = () => async (dispatch) => {
     const token = window.localStorage.getItem("token")
@@ -61,6 +61,7 @@ export const createNewPost = (postText) => async (dispatch) => {
 
 export const vote = (postId, direction, userVoteDirection) => async (dispatch) => {
     const token = window.localStorage.getItem("token")    
+    
     if (userVoteDirection === direction){
         try {
             await Axios.put (
@@ -79,7 +80,7 @@ export const vote = (postId, direction, userVoteDirection) => async (dispatch) =
         
             )
                 
-                dispatch(fetchPosts())
+            dispatch(fetchPosts())
                 
         }
         catch (error) {
@@ -105,6 +106,7 @@ export const vote = (postId, direction, userVoteDirection) => async (dispatch) =
         
             )
             dispatch(fetchPosts())
+            
         } catch (error) {
             alert("Ocorreu um erro, tente novamente")
             console.log(error)
@@ -112,7 +114,7 @@ export const vote = (postId, direction, userVoteDirection) => async (dispatch) =
     }
 }
 
-export const fetchDetailsPageContent = (post) => async (dispatch) => {
+export const fetchDetailsPageContent = (post, currentPage) => async (dispatch) => {
     const token = window.localStorage.getItem("token")
     try {
         const response = await Axios.get (
@@ -131,7 +133,10 @@ export const fetchDetailsPageContent = (post) => async (dispatch) => {
         
         dispatch (setDetailsPageContent (response.data.post.comments, post))
         
-        dispatch (push (routes.details))
+        if ( currentPage === routes.feed ) {
+            dispatch (replace (routes.details))
+        }    
+        
            
     }
     
@@ -229,7 +234,3 @@ export const voteComment =  (commentId, direction, userVoteDirection, postId, cu
     }
 }
 
-export const voteAndUpdate = (post, direction) => async (dispatch) => {
-    await vote(post.id, direction, post.userVoteDirection)
-    dispatch (fetchDetailsPageContent(post))
-}
