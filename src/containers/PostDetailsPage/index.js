@@ -1,47 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography'
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import TextField from '@material-ui/core/TextField';
-
 import { createComment, vote } from '../../actions/Posts'
-
 import styled from 'styled-components'
 import CommentCard from '../CommentCard'
 import { routes } from '../Router/'
 import { push } from 'connected-react-router'
-
-import AddCommentIcon from '@material-ui/icons/AddComment';
-
-import { makeStyles } from '@material-ui/core/styles';
 import PostCard from '../PostCard'
 
 
 const Container = styled.div`
-    margin-left: 30px;
+    width:100%;
+    margin:auto;
+    display: grid;
+    grid-gap:20px;
+    place-content: center;
 `
-const useStyles = makeStyles({
-    card: {
-        maxWidth: 375,
-    },
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
-    },
-    title: {
-        fontSize: 14,
-    },
-    pos: {
-        marginBottom: 12,
-    },
-});
-
-
+const CommentForm = styled.form`
+    display: grid;
+    width: 300px;
+`
 
 class DetailsPage extends React.Component {
     constructor(props) {
@@ -69,35 +48,18 @@ class DetailsPage extends React.Component {
 
     render() {
 
-        const VoteCount = styled.span`
-            color: ${props => props.color}
-            `
-
-
-
-
-        const VoteCountColor = () => {
-            if (this.props.currentPost.votesCount > 0) {
-                return ('green')
-            } else if (this.props.currentPost.votesCount < 0) {
-                return ('red')
-            } else {
-                return ('gainsboro')
-            }
-        }
-
         return (
 
             <Container>
 
-                
+
                 {this.props.posts.filter(
                     post => post.id === this.props.currentPost.id
                 ).map(
                     post => <PostCard key={post.id} post={post} />
                 )}
 
-                <form>
+                <CommentForm>
 
                     <TextField
                         label="comentários" name="newComment" type="text"
@@ -108,14 +70,10 @@ class DetailsPage extends React.Component {
 
                     <Button type="submit" variant="contained" color="primary" onSubmit={() => this.props.createComment(this.props.currentPost, this.state.newComment)}> Comentar </Button>
 
-
-                    {this.props.currentPostComments.map(
-                        comment => (<CommentCard comment={comment} currentPostId={this.props.currentPost.id} />)
-                    )}
-
-
-                </form>
-
+                </CommentForm>
+                {this.props.currentPostComments.map(
+                    comment => (<CommentCard comment={comment} currentPostId={this.props.currentPost.id} />)
+                )}
             </Container>
         )
     }
