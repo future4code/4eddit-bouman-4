@@ -7,11 +7,16 @@ import Typography from '@material-ui/core/Typography'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import TextField from '@material-ui/core/TextField';
+
 import { createComment, vote } from '../../actions/Posts'
+
 import styled from 'styled-components'
 import CommentCard from '../CommentCard'
 import { routes } from '../Router/'
 import { push } from 'connected-react-router'
+
+import AddCommentIcon from '@material-ui/icons/AddComment';
+
 import { makeStyles } from '@material-ui/core/styles';
 import PostCard from '../PostCard'
 
@@ -61,6 +66,7 @@ class DetailsPage extends React.Component {
 
     }
 
+
     render() {
 
         const VoteCount = styled.span`
@@ -83,6 +89,7 @@ class DetailsPage extends React.Component {
         return (
 
             <Container>
+
                 
                 {this.props.posts.filter(
                     post => post.id === this.props.currentPost.id
@@ -98,7 +105,9 @@ class DetailsPage extends React.Component {
                         onChange={this.handleInputs}>
                     </TextField>
 
+
                     <Button type="submit" variant="contained" color="primary" onSubmit={() => this.props.createComment(this.props.currentPost, this.state.newComment)}> Comentar </Button>
+
 
                     {this.props.currentPostComments.map(
                         comment => (<CommentCard comment={comment} currentPostId={this.props.currentPost.id} />)
@@ -117,6 +126,7 @@ function mapDispatchToProps(dispatch) {
         createComment: (currentPostId, newComment) => dispatch(createComment(currentPostId, newComment)),
         goToFeed: () => dispatch(push(routes.feed)),
         vote: (currentPostId, direction, userVoteDirection) => dispatch(vote(currentPostId, direction, userVoteDirection)),
+
     })
 }
 

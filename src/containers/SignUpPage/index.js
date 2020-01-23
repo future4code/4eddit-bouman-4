@@ -5,8 +5,10 @@ import styled from 'styled-components'
 import {createUser} from '../../actions/Users'
 import {connect} from 'react-redux'
 import logoCommentario from '../../images/logo-comentario.png'
+
 import {routes} from '../Router'
 import {push} from 'connected-react-router'
+
 
 const Container = styled.div `
   display: flex;
@@ -30,10 +32,12 @@ const SpanStyledCadastro = styled.span`
 
 const SpanStyled = styled.span`
   color: #ff7f50;
+
   :hover{
     font-weight:bold;
     cursor: pointer;
   }
+
 `
 
 class SignUpPage extends Component {
@@ -69,14 +73,18 @@ class SignUpPage extends Component {
              value={this.state.password} onChange={this.handleInputs}/>
             
             <br/>
+
             <Button type="submit" variant="contained" color="primary" onSubmit={() => this.props.createUser (
+
               this.state.userName,this.state.email, this.state.password)}> 
                 <SpanStyledCadastro>Cadastrar</SpanStyledCadastro> 
             </Button>
             <br/>
         </FormStyled>
         
+
         <SpanStyled onClick={this.props.goToLoginPage}>Já tem uma conta?</SpanStyled>
+
       </Container>
     );
   }

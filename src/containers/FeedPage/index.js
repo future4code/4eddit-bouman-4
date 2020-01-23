@@ -9,6 +9,7 @@ import { routes } from '../Router'
 import { push } from 'connected-react-router'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+
 const FeedContainer = styled.div`
     margin:auto;
     >*{margin:10px };   
@@ -28,7 +29,7 @@ const FormStyled = styled.form`
 class FeedPage extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
+        this.state = { 
             postText: "",
         }
     }
@@ -39,33 +40,33 @@ class FeedPage extends React.Component {
         })
     }
 
-
-
-
     componentDidMount() {
 
         const token = window.localStorage.getItem("token")
 
-        if (token) {
-            console.log(this.props.posts)
+        if (token) {          
             this.props.fetchPosts()
         } else {
             this.props.goToLoginPage()
         }
+
     }
 
     submitPost = (ev) => {
         this.props.createNewPost(this.state.postText)
+
     }
 
     render() {
         return (
-            <FeedContainer onChange={(ev) => { if (ev.key === "Enter") { this.props.createNewPost(this.state.postText) } }} >
+
+            <FeedContainer >
                 <FormStyled>
                     <TextField
                         label="Escreva seu post"
                         name="postText"
                         type="text"
+
                         variant="outlined"
                         value={this.state.postText}
                         onChange={this.handleInputs}
@@ -77,15 +78,19 @@ class FeedPage extends React.Component {
                         variant="contained"
                         color="primary"
                         onSubmit={this.submitPost}
+
                     >
                         Enviar
                     </Button>
                 </FormStyled>
 
+          
+
                 {this.props.posts.length !== 0 ? this.props.posts.map(
                     post => <PostCard key={post.id} post={post} />
                 )
                     : <CircularProgress color="primary" />}
+
 
             </FeedContainer>
         )

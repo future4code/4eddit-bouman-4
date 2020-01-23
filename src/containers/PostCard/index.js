@@ -23,10 +23,12 @@ const useStyles = makeStyles({
   card: {
     width: 300,
     display: 'flex',   
+
   }, 
   title: {
     fontSize: 14,
   },  
+
   pos: {
     marginBottom: 12,
   },
@@ -76,7 +78,9 @@ export function SimpleCard(props) {
 
         <Button
           color="secondary" size="small"
+
           onClick={() => props.fetchDetailsPageContent(props.post, "/Feed/")}
+
         >
           <Badge badgeContent={props.post.commentsNumber} color="primary">
             <AddCommentIcon />
@@ -101,7 +105,9 @@ export function SimpleCard(props) {
 
 function mapDispatchToProps(dispatch) {
   return ({
+
     fetchDetailsPageContent: (post, currentPage) => dispatch(fetchDetailsPageContent(post, currentPage)),
+
     vote: (postId, direction, userVoteDirection) => (dispatch(vote(postId, direction, userVoteDirection)))
   })
 }
