@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components'
@@ -29,14 +28,6 @@ const SpanStyledSignUp = styled.span `
   color: #ff7f50;
 `
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      width: 200,
-    },
-  },
-}));
 
 class LoginPage extends Component {
   constructor(props){
