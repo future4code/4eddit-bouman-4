@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components'
@@ -7,31 +6,27 @@ import {submit} from '../../actions/Users'
 import {connect} from 'react-redux'
 import {push} from 'connected-react-router'
 import {routes} from '../Router'
-import logo from "../../images/logo.png"
+import logo from "../../images/4eddit-logo.png"
 
 const Container = styled.div `
   display: flex;
   flex-direction: column;
-  align-item:center;
-  width:300px;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: white ;
+  color: white;
   `
-
 const FormStyled = styled.form `
-display: flex;
+  display: flex;
   flex-direction: column;
-  
 `
-
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      width: 200,
-    },
-  },
-}));
-
+const SpanStyledLogin = styled.span `
+    color: white;
+  `
+const SpanStyledSignUp = styled.span `
+  color: #ff7f50;
+`
 
 
 class LoginPage extends Component {
@@ -43,33 +38,34 @@ class LoginPage extends Component {
       }
   }
 
-  componentDidUpdate () {
-    
-  }
-
 handleInputs = (event) => {
   this.setState({
     [event.target.name]: event.target.value
   })
 }
-  
-
-
 
   render() {
     return (
       <Container>
-        <img src={logo} width="300" />
+        <img alt="Logo Future4" src={logo} width="300" />
         
         <FormStyled>
-            <TextField  label="email" name="email" type="email" required variant="outlined" value={this.state.email} onChange={this.handleInputs}/>
-            <br></br>
-            <TextField  label="password" type="password" name="password" required variant="outlined" value={this.state.password} onChange={this.handleInputs}/>
-            
-            <Button variant="contained" color="primary" onClick={() => this.props.submit (this.state.email, this.state.password)}> Logar </Button>
-        </FormStyled>
+            <TextField  label="email" name="email" type="email" required variant="outlined" 
+              value={this.state.email} onChange={this.handleInputs}/>
 
-        <Button variant="contained" color="primary" onClick={this.props.goToSignUp}> Cadastrar </Button>
+            <br></br>
+            <TextField  label="password" type="password" name="password" required variant="outlined"
+              value={this.state.password} onChange={this.handleInputs}/>
+            <br/>
+            <Button variant="contained" color="primary" onClick={() => this.props.submit 
+              (this.state.email, this.state.password)}> 
+              <SpanStyledLogin> Entrar </SpanStyledLogin> 
+            </Button>
+            <br/>
+            <Button variant="outlined" color="primary" onClick={this.props.goToSignUp}>
+              <SpanStyledSignUp>Cadastre-se</SpanStyledSignUp>
+            </Button>
+        </FormStyled>        
       </Container>
     );
   }
@@ -81,7 +77,5 @@ function mapDispatchToProps (dispatch){
     goToSignUp: () => dispatch (push(routes.signUp))
   })
 }
-
-
 
 export default connect (null,mapDispatchToProps)(LoginPage);
