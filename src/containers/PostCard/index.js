@@ -22,8 +22,7 @@ const VoteCount = styled.span`
 const useStyles = makeStyles({
   card: {
     width: 300,
-    display: 'flex',   
-
+    display: 'flex',       
   }, 
   title: {
     fontSize: 14,
@@ -34,7 +33,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Actions = styled.div`
+export const FlexContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between; 
@@ -57,8 +56,8 @@ export function SimpleCard(props) {
 
   return (
     <Card className={classes.card} color="primary">
-      <Actions>
-        <Actions>
+      <FlexContainer>
+        <FlexContainer>
           <Button
             color={props.post.userVoteDirection === 1 ? "primary" : "secondary"}
             onClick={() => props.vote(props.post.id, 1, props.post.userVoteDirection)}
@@ -74,7 +73,7 @@ export function SimpleCard(props) {
             onClick={() => props.vote(props.post.id, -1, props.post.userVoteDirection)}
             size="small"> <ArrowDownwardIcon />
           </Button>
-        </Actions>
+        </FlexContainer>
 
         <Button
           color="secondary" size="small"
@@ -86,7 +85,7 @@ export function SimpleCard(props) {
             <AddCommentIcon />
           </Badge>
         </Button>
-      </Actions>
+      </FlexContainer>
       <CardContent>
 
         <Typography variant="h5" component="h2">
