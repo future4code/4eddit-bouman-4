@@ -20,7 +20,7 @@ display: flex;
 class FeedPage extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
+        this.state = { 
             postText: "",
 
 
