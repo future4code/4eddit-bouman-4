@@ -6,6 +6,10 @@ import {createUser} from '../../actions/Users'
 import {connect} from 'react-redux'
 import logoCommentario from '../../images/logo-comentario.png'
 
+import {routes} from '../Router'
+import {push} from 'connected-react-router'
+
+
 const Container = styled.div `
   display: flex;
   flex-direction: column;
@@ -28,6 +32,12 @@ const SpanStyledCadastro = styled.span`
 
 const SpanStyled = styled.span`
   color: #ff7f50;
+
+  :hover{
+    font-weight:bold;
+    cursor: pointer;
+  }
+
 `
 
 class SignUpPage extends Component {
@@ -63,14 +73,18 @@ class SignUpPage extends Component {
              value={this.state.password} onChange={this.handleInputs}/>
             
             <br/>
-            <Button variant="contained" color="primary" onClick={() => this.props.createUser (
+
+            <Button type="submit" variant="contained" color="primary" onSubmit={() => this.props.createUser (
+
               this.state.userName,this.state.email, this.state.password)}> 
                 <SpanStyledCadastro>Cadastrar</SpanStyledCadastro> 
             </Button>
             <br/>
         </FormStyled>
         
-        <SpanStyled>Já tem uma conta?</SpanStyled>
+
+        <SpanStyled onClick={this.props.goToLoginPage}>Já tem uma conta?</SpanStyled>
+
       </Container>
     );
   }
@@ -79,6 +93,7 @@ class SignUpPage extends Component {
 function mapDispatchToProps (dispatch){
   return ({
     createUser: (userName, email, password) => dispatch (createUser (userName, email, password)),
+    goToLoginPage: () => dispatch(push(routes.root))
   })
 }
 

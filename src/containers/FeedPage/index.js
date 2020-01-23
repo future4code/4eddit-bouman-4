@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import PostCard from '../PostCard'
 import { routes } from '../Router'
 import { push } from 'connected-react-router'
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 const FeedContainer = styled.div`
     margin:auto;
@@ -38,46 +40,58 @@ class FeedPage extends React.Component {
         })
     }
 
-
-
-
     componentDidMount() {
 
         const token = window.localStorage.getItem("token")
 
-        if (token) {
+        if (token) {          
             this.props.fetchPosts()
         } else {
             this.props.goToLoginPage()
         }
+
+    }
+
+    submitPost = (ev) => {
+        this.props.createNewPost(this.state.postText)
+
     }
 
     render() {
         return (
-            <FeedContainer onChange={(ev) => {if (ev.key === "Enter"){this.props.createNewPost(this.state.postText)}}} >
+
+            <FeedContainer >
                 <FormStyled>
                     <TextField
                         label="Escreva seu post"
                         name="postText"
                         type="text"
-                        required
+
                         variant="outlined"
                         value={this.state.postText}
-                        onChange={this.handleInputs} 
+                        onChange={this.handleInputs}
+                        required
                     />
-                    <br/>
+                    <br />
                     <Button
+                        type="submit"
                         variant="contained"
                         color="primary"
-                        onClick={() => this.props.createNewPost(this.state.postText)}
+                        onSubmit={this.submitPost}
+
                     >
                         Enviar
                     </Button>
                 </FormStyled>
-                {this.props.posts.map(
+
+          
+
+                {this.props.posts.length !== 0 ? this.props.posts.map(
                     post => <PostCard key={post.id} post={post} />
-                )}               
-                
+                )
+                    : <CircularProgress color="primary" />}
+
+
             </FeedContainer>
         )
     }

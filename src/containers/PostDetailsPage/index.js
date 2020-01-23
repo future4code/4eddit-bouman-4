@@ -1,20 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import TextField from '@material-ui/core/TextField';
-import { createComment, vote, voteAndUpdate } from '../../actions/Posts'
+
+import { createComment, vote } from '../../actions/Posts'
+
 import styled from 'styled-components'
 import CommentCard from '../CommentCard'
 import { routes } from '../Router/'
 import { push } from 'connected-react-router'
+
 import AddCommentIcon from '@material-ui/icons/AddComment';
+
 import { makeStyles } from '@material-ui/core/styles';
+import PostCard from '../PostCard'
 
 
 const Container = styled.div`
@@ -48,9 +52,6 @@ class DetailsPage extends React.Component {
         }
     }
 
-
-
-
     componentDidMount() {
 
         if (!this.props.currentPost) {
@@ -62,7 +63,9 @@ class DetailsPage extends React.Component {
         this.setState({
             [event.target.name]: event.target.value
         })
+
     }
+
 
     render() {
 
@@ -86,38 +89,13 @@ class DetailsPage extends React.Component {
         return (
 
             <Container>
-                <Card>
-                    <CardContent>
 
-                        <Typography variant="h5" component="h2">
-                            {this.props.currentPost.username}
-                        </Typography>
-
-                        <Typography variant="body2" component="p">
-                            {this.props.currentPost.text}
-                        </Typography>
-
-                    </CardContent>
-
-                    <Button
-                        color={this.props.currentPost.userVoteDirection === 1 ? "primary" : "secondary"}
-                        onClick={() => this.props.voteAndUpdate(this.props.currentPost, +1)}
-                        size="small"><ArrowUpwardIcon />
-                    </Button>
-
-                    <VoteCount color={VoteCountColor()}>{this.props.currentPost.votesCount}</VoteCount>
-
-                    <Button
-                        color={this.props.currentPost.userVoteDirection === -1 ? "primary" : "secondary"}
-                        onClick={() => this.props.voteAndUpdate(this.props.currentPost, -1)}
-                        size="small"> <ArrowDownwardIcon />
-                    </Button>
-
-                    {this.props.currentPost.commentsNumber}
-
-                    {" Comentários"}
-                </Card>
-
+                
+                {this.props.posts.filter(
+                    post => post.id === this.props.currentPost.id
+                ).map(
+                    post => <PostCard key={post.id} post={post} />
+                )}
 
                 <form>
 
@@ -127,7 +105,9 @@ class DetailsPage extends React.Component {
                         onChange={this.handleInputs}>
                     </TextField>
 
-                    <Button variant="contained" color="primary" onClick={() => this.props.createComment(this.props.currentPost, this.state.newComment)}> Comentar </Button>
+
+                    <Button type="submit" variant="contained" color="primary" onSubmit={() => this.props.createComment(this.props.currentPost, this.state.newComment)}> Comentar </Button>
+
 
                     {this.props.currentPostComments.map(
                         comment => (<CommentCard comment={comment} currentPostId={this.props.currentPost.id} />)
@@ -146,14 +126,15 @@ function mapDispatchToProps(dispatch) {
         createComment: (currentPostId, newComment) => dispatch(createComment(currentPostId, newComment)),
         goToFeed: () => dispatch(push(routes.feed)),
         vote: (currentPostId, direction, userVoteDirection) => dispatch(vote(currentPostId, direction, userVoteDirection)),
-        voteAndUpdate: (post, direction) => dispatch(voteAndUpdate(post, direction))
+
     })
 }
 
 function mapStateToProps(state) {
     return ({
         currentPost: state.postReducer.currentPost,
-        currentPostComments: state.postReducer.currentPostComments
+        currentPostComments: state.postReducer.currentPostComments,
+        posts: state.postReducer.posts
     })
 }
 

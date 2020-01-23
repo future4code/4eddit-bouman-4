@@ -57,7 +57,9 @@ handleInputs = (event) => {
             <TextField  label="password" type="password" name="password" required variant="outlined"
               value={this.state.password} onChange={this.handleInputs}/>
             <br/>
-            <Button variant="contained" color="primary" onClick={() => this.props.submit 
+
+            <Button type="submit" variant="contained" color="primary" onSubmit={() => this.props.submit 
+
               (this.state.email, this.state.password)}> 
               <SpanStyledLogin> Entrar </SpanStyledLogin> 
             </Button>

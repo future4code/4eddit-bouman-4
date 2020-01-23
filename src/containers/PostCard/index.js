@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography'
@@ -24,15 +23,12 @@ const useStyles = makeStyles({
   card: {
     width: 300,
     display: 'flex',   
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
+
+  }, 
   title: {
     fontSize: 14,
-  },
+  },  
+
   pos: {
     marginBottom: 12,
   },
@@ -82,7 +78,9 @@ export function SimpleCard(props) {
 
         <Button
           color="secondary" size="small"
-          onClick={() => props.fetchDetailsPageContent(props.post)}
+
+          onClick={() => props.fetchDetailsPageContent(props.post, "/Feed/")}
+
         >
           <Badge badgeContent={props.post.commentsNumber} color="primary">
             <AddCommentIcon />
@@ -107,7 +105,9 @@ export function SimpleCard(props) {
 
 function mapDispatchToProps(dispatch) {
   return ({
-    fetchDetailsPageContent: (post) => dispatch(fetchDetailsPageContent(post)),
+
+    fetchDetailsPageContent: (post, currentPage) => dispatch(fetchDetailsPageContent(post, currentPage)),
+
     vote: (postId, direction, userVoteDirection) => (dispatch(vote(postId, direction, userVoteDirection)))
   })
 }
