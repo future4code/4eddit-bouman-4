@@ -44,12 +44,18 @@ handleInputs = (event) => {
   })
 }
 
-  render() {
+handleSubmit = ev => {
+  ev.preventDefault()
+  this.props.submit(this.state.email, this.state.password)
+  
+}
+
+render() {
     return (
       <Container>
         <img alt="Logo Future4" src={logo} width="300" />
         
-        <FormStyled>
+        <FormStyled onSubmit={this.handleSubmit}>
             <TextField  label="email" name="email" type="email" required variant="outlined" 
               value={this.state.email} onChange={this.handleInputs}/>
 
@@ -58,9 +64,8 @@ handleInputs = (event) => {
               value={this.state.password} onChange={this.handleInputs}/>
             <br/>
 
-            <Button type="submit" variant="contained" color="primary" onSubmit={() => this.props.submit 
-
-              (this.state.email, this.state.password)}> 
+            <Button type="submit" variant="contained" color="primary"  
+> 
               <SpanStyledLogin> Entrar </SpanStyledLogin> 
             </Button>
             <br/>
