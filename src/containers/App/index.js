@@ -1,4 +1,5 @@
 import React from "react";
+import 'typeface-roboto';
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { MuiThemeProvider, CssBaseline } from "@material-ui/core";

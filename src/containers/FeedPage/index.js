@@ -8,7 +8,20 @@ import PostCard from '../PostCard'
 import { routes } from '../Router'
 import { push } from 'connected-react-router'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import logo from "../../images/f4-icon.png"
 
+
+const style = {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 52,
+    margin: 17,
+    width: 180,
+    padding: '0 30px',
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+  };
 
 const FeedContainer = styled.div`
     margin:auto;
@@ -22,8 +35,33 @@ const FormStyled = styled.form`
     padding: 2px;    
     display: flex;
     justify-content: center;
-    width:100%;
+    width:90%;
 `
+
+const HeaderStyled = styled.div `
+    background-color: #F0F8FF;
+    width: 100vw;
+    height: 18vh;
+    margin-bottom: 30px;    
+    display: flex;
+    img {
+        width: 81px;
+        height: 100px;
+      
+    };
+
+`
+
+
+const StyledP = styled.span`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 35px;
+`
+
+const MainContainer = styled.div`
+    background-color: 'white'
+`
+
 
 
 class FeedPage extends React.Component {
@@ -33,6 +71,8 @@ class FeedPage extends React.Component {
             postText: "",
         }
     }
+
+    
 
     handleInputs = (event) => {
         this.setState({
@@ -57,8 +97,15 @@ class FeedPage extends React.Component {
 
     }
 
+    
+
     render() {
         return (
+           <MainContainer>
+            <HeaderStyled>
+                <img src={logo} alt=""/>
+                <StyledP>4eddit</StyledP>
+            </HeaderStyled>
 
             <FeedContainer >
                 <FormStyled>
@@ -66,7 +113,8 @@ class FeedPage extends React.Component {
                         label="Escreva seu post"
                         name="postText"
                         type="text"
-
+                        fullWidth
+                        margin="normal"
                         variant="outlined"
                         value={this.state.postText}
                         onChange={this.handleInputs}
@@ -78,7 +126,7 @@ class FeedPage extends React.Component {
                         variant="contained"
                         color="primary"
                         onSubmit={this.submitPost}
-
+                        style={style}
                     >
                         Enviar
                     </Button>
@@ -93,6 +141,7 @@ class FeedPage extends React.Component {
 
 
             </FeedContainer>
+        </MainContainer> 
         )
     }
 }
