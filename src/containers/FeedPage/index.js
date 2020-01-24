@@ -9,6 +9,7 @@ import { routes } from '../Router'
 import { push } from 'connected-react-router'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import logo from "../../images/f4-icon.png"
+import Headers from '../components/Headers'
 
 
 const style = {
@@ -21,7 +22,7 @@ const style = {
     width: 180,
     padding: '0 30px',
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-  };
+};
 
 const FeedContainer = styled.div`
     margin:auto;
@@ -38,7 +39,7 @@ const FormStyled = styled.form`
     width:90%;
 `
 
-const HeaderStyled = styled.div `
+const HeaderStyled = styled.div`
     background-color: #F0F8FF;
     width: 100vw;
     height: 18vh;
@@ -53,10 +54,7 @@ const HeaderStyled = styled.div `
 `
 
 
-const StyledP = styled.span`
-    font-family: 'Montserrat', sans-serif;
-    font-size: 35px;
-`
+
 
 const MainContainer = styled.div`
     background-color: 'white'
@@ -67,12 +65,12 @@ const MainContainer = styled.div`
 class FeedPage extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { 
+        this.state = {
             postText: "",
         }
     }
 
-    
+
 
     handleInputs = (event) => {
         this.setState({
@@ -84,7 +82,7 @@ class FeedPage extends React.Component {
 
         const token = window.localStorage.getItem("token")
 
-        if (token) {          
+        if (token) {
             this.props.fetchPosts()
         } else {
             this.props.goToLoginPage()
@@ -93,55 +91,53 @@ class FeedPage extends React.Component {
     }
 
     submitPost = (ev) => {
+        ev.preventDefault()
         this.props.createNewPost(this.state.postText)
+        this.setState({ postText: "" })
 
     }
 
-    
+
 
     render() {
         return (
-           <MainContainer>
-            <HeaderStyled>
-                <img src={logo} alt=""/>
-                <StyledP>4eddit</StyledP>
-            </HeaderStyled>
+            <MainContainer>
+                <Headers />
 
-            <FeedContainer >
-                <FormStyled>
-                    <TextField
-                        label="Escreva seu post"
-                        name="postText"
-                        type="text"
-                        fullWidth
-                        margin="normal"
-                        variant="outlined"
-                        value={this.state.postText}
-                        onChange={this.handleInputs}
-                        required
-                    />
-                    <br />
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        onSubmit={this.submitPost}
-                        style={style}
-                    >
-                        Enviar
+                <FeedContainer >
+                    <FormStyled onSubmit={this.submitPost}>
+                        <TextField
+                            label="Escreva seu post"
+                            name="postText"
+                            type="text"
+                            fullWidth
+                            margin="normal"
+                            variant="outlined"
+                            value={this.state.postText}
+                            onChange={this.handleInputs}
+                            required
+                        />
+                        <br />
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            style={style}
+                        >
+                            Enviar
                     </Button>
-                </FormStyled>
-
-          
-
-                {this.props.posts.length !== 0 ? this.props.posts.map(
-                    post => <PostCard key={post.id} post={post} />
-                )
-                    : <CircularProgress color="primary" />}
+                    </FormStyled>
 
 
-            </FeedContainer>
-        </MainContainer> 
+
+                    {this.props.posts.length !== 0 ? this.props.posts.map(
+                        post => <PostCard key={post.id} post={post} />
+                    )
+                        : <CircularProgress color="primary" />}
+
+
+                </FeedContainer>
+            </MainContainer>
         )
     }
 }

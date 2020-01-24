@@ -11,8 +11,8 @@ import PostDetailsPage from '../PostDetailsPage'
 
 export const routes = {
   root: "/",
-  signUp: "/SignUp/",
-  feed: "/Feed/",
+  signUp: "/signUp/",
+  feed: "/feed/",
   details: "/details" 
 
   // Outras rotas aqui
