@@ -20,7 +20,7 @@ const style = {
     height: 52,
     margin: 17,
     width: 180,
-    padding: '0 30px',
+    padding: 0,
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
 };
 
@@ -39,25 +39,8 @@ const FormStyled = styled.form`
     width:90%;
 `
 
-const HeaderStyled = styled.div`
-    background-color: #F0F8FF;
-    width: 100vw;
-    height: 18vh;
-    margin-bottom: 30px;    
-    display: flex;
-    img {
-        width: 81px;
-        height: 100px;
-      
-    };
-
-`
-
-
-
-
 const MainContainer = styled.div`
-    background-color: 'white'
+    background-color: 'white',
 `
 
 
