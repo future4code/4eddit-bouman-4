@@ -1,6 +1,6 @@
 import Axios from "axios"
 import {routes} from '../../containers/Router'
-import {push, replace} from 'connected-react-router'
+import {push} from 'connected-react-router'
 
 export const fetchPosts  = () => async (dispatch) => {
     const token = window.localStorage.getItem("token")
@@ -134,7 +134,7 @@ export const fetchDetailsPageContent = (post, currentPage) => async (dispatch) =
         dispatch (setDetailsPageContent (response.data.post.comments, post))
         
         if ( currentPage === routes.feed ) {
-            dispatch (replace (routes.details))
+            dispatch (push (routes.details))
         }    
         
            

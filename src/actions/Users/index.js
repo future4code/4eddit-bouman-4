@@ -22,7 +22,7 @@ export const submit = (email,password) => async (dispatch) => {
         window.localStorage.setItem("token", response.data.token)
         dispatch (push(routes.feed))
     } catch(error) {
-        alert("Ocorreu um erro, tente novamente")
+        alert("Usuário não encontrado ou senha incorreta")
         console.log(error)
     }
 }
@@ -46,6 +46,7 @@ export const createUser = (userName,email,password) => async (dispatch) => {
             }
 
         )
+        window.localStorage.setItem("token", response.data.token)
         dispatch(push(routes.feed))
     } catch (error) {
         alert("Ocorreu um erro, tente novamente")

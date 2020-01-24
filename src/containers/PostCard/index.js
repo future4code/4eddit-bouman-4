@@ -78,7 +78,7 @@ export function SimpleCard(props) {
         <Button
           color="secondary" size="small"
 
-          onClick={() => props.fetchDetailsPageContent(props.post, "/Feed/")}
+          onClick={() => props.fetchDetailsPageContent(props.post, "/feed/")}
 
         >
           <Badge badgeContent={props.post.commentsNumber} color="primary">

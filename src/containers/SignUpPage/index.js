@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components'
-import {createUser} from '../../actions/Users'
-import {connect} from 'react-redux'
+import { createUser } from '../../actions/Users'
+import { connect } from 'react-redux'
 import logoCommentario from '../../images/logo-comentario.png'
 
-import {routes} from '../Router'
-import {push} from 'connected-react-router'
+import { routes } from '../Router'
+import { push } from 'connected-react-router'
 
 
-const Container = styled.div `
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,7 +21,7 @@ const Container = styled.div `
   text-align: right;
   `
 
-const FormStyled = styled.form `
+const FormStyled = styled.form`
 display: flex;
   flex-direction: column;  
 `
@@ -41,47 +41,50 @@ const SpanStyled = styled.span`
 `
 
 class SignUpPage extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
-      this.state = {
-        email: "",
-        password: "",
-        userName: "",
-      }
+    this.state = {
+      email: "",
+      password: "",
+      userName: "",
+    }
   }
-  
+
   handleInputs = (event) => {
     this.setState({
       [event.target.name]: event.target.value
     })
   }
-  
+
+  handleUserCreation = ev => {
+    ev.preventDefault()
+    this.props.createUser(this.state.userName, this.state.email, this.state.password)
+  }
+
   render() {
     return (
       <Container>
-        <img alt="Logo Future4" src={logoCommentario} width="300"/>
-        <FormStyled>
-            <TextField  label="Nome de usuário" name="userName" type="text" required variant="outlined"
-             value={this.state.userName} onChange={this.handleInputs}/>
-            <br/>
-            
-            <TextField  label="Email" name="email" type="email" required variant="outlined"
-             value={this.state.email} onChange={this.handleInputs}/>
-            <br/>
+        <img alt="Logo Future4" src={logoCommentario} width="300" />
+        <FormStyled onSubmit={this.handleUserCreation}>
+          <TextField label="Nome de usuário" name="userName" type="text" required variant="outlined"
+            value={this.state.userName} onChange={this.handleInputs} />
+          <br />
 
-            <TextField  label="Senha" type="password" name="password" required variant="outlined"
-             value={this.state.password} onChange={this.handleInputs}/>
-            
-            <br/>
+          <TextField label="Email" name="email" type="email" required variant="outlined"
+            value={this.state.email} onChange={this.handleInputs} />
+          <br />
 
-            <Button type="submit" variant="contained" color="primary" onSubmit={() => this.props.createUser (
+          <TextField label="Senha" type="password" name="password" required variant="outlined"
+            value={this.state.password} onChange={this.handleInputs} />
 
-              this.state.userName,this.state.email, this.state.password)}> 
-                <SpanStyledCadastro>Cadastrar</SpanStyledCadastro> 
-            </Button>
-            <br/>
+          <br />
+
+          <Button type="submit" variant="contained" color="primary" >
+            <SpanStyledCadastro>Cadastrar</SpanStyledCadastro>
+          </Button>
+          <br />
         </FormStyled>
-        
+
 
         <SpanStyled onClick={this.props.goToLoginPage}>Já tem uma conta?</SpanStyled>
 
@@ -90,11 +93,11 @@ class SignUpPage extends Component {
   }
 }
 
-function mapDispatchToProps (dispatch){
+function mapDispatchToProps(dispatch) {
   return ({
-    createUser: (userName, email, password) => dispatch (createUser (userName, email, password)),
+    createUser: (userName, email, password) => dispatch(createUser(userName, email, password)),
     goToLoginPage: () => dispatch(push(routes.root))
   })
 }
 
-export default connect (null,mapDispatchToProps)(SignUpPage)
+export default connect(null, mapDispatchToProps)(SignUpPage)

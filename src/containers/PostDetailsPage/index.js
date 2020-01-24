@@ -8,6 +8,7 @@ import CommentCard from '../CommentCard'
 import { routes } from '../Router/'
 import { push } from 'connected-react-router'
 import PostCard from '../PostCard'
+import Headers from '../components/Headers'
 
 
 const Container = styled.div`
@@ -45,13 +46,18 @@ class DetailsPage extends React.Component {
 
     }
 
+    hadleCommentCreation = ev => {
+        ev.preventDefault()
+        this.props.createComment(this.props.currentPost, this.state.newComment)
+        this.setState({ newComment: "" })
+    }
 
     render() {
 
         return (
 
             <Container>
-
+                <Headers />
 
                 {this.props.posts.filter(
                     post => post.id === this.props.currentPost.id
@@ -59,7 +65,7 @@ class DetailsPage extends React.Component {
                     post => <PostCard key={post.id} post={post} />
                 )}
 
-                <CommentForm>
+                <CommentForm onSubmit={this.hadleCommentCreation}>
 
                     <TextField
                         label="comentários" name="newComment" type="text"
@@ -67,8 +73,7 @@ class DetailsPage extends React.Component {
                         onChange={this.handleInputs}>
                     </TextField>
 
-
-                    <Button type="submit" variant="contained" color="primary" onSubmit={() => this.props.createComment(this.props.currentPost, this.state.newComment)}> Comentar </Button>
+                    <Button type="submit" variant="contained" color="primary" > Comentar </Button>
 
                 </CommentForm>
                 {this.props.currentPostComments.map(
