@@ -14,9 +14,13 @@ import Headers from '../components/Headers'
 const Container = styled.div`
     width:100%;
     margin:auto;
-    display: grid;
-    grid-gap:20px;
-    place-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    > *{
+        margin-bottom: 20px;
+    }
+    box-sizing: border-box;
 `
 const CommentForm = styled.form`
     display: grid;

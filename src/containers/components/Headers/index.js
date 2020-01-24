@@ -7,11 +7,11 @@ import Button from '@material-ui/core/Button'
 
 const HeaderStyled = styled.div`
     background-color: #F0F8FF;
-    width: 100vw;
     height: 18vh;
     margin-bottom: 30px;    
     display: flex;
     justify-content: space-between;
+    width: 97.8vw;
     img {
         width: 81px;
         height: 100px;

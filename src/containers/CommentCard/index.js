@@ -12,8 +12,7 @@ import { FlexContainer } from '../PostCard'
 
 const useStyles = makeStyles({
   card: {
-    minWidth: 300,
-    maxWidth: 600,
+    width: 300,
     display: 'flex',
     justifyContent: 'space-between',
   },
